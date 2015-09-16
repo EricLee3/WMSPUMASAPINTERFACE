@@ -185,13 +185,7 @@ public class TaskPumaRecv extends TimerTask {
 						}
 					}
 					
-//					if(isDone) {
-//					if(!isEx && isDone) { 
-//						if(result.equals("S")) {
-//						new File(prop.getProperty("recv.targetPath")+recvFiles[i]).delete();
-//						}
-//						recvFiles[i] = null;
-//					}
+
 				}
 				cnt++;
 			}

@@ -20,13 +20,18 @@ import com.gics.edi.common.XMLManager;
 import com.gics.edi.conn.ConnectionManager;
 import com.gics.edi.linker.Linker;
 
-public class TaskPumaSendOutbound extends TimerTask {
+/**
+ * 특정 outbound 주문에 대해 xml 파일 생성만 하기위해 만듬
+ * @author Administrator
+ *
+ */
+public class TaskPumaSendOutboundTmp extends TimerTask {
 	private static Logger loggerErr = Logger.getLogger("process.puma.err");
 	private static Logger logger = Logger.getLogger("process.puma");
 	
 	public void run() {
 		Linker linker = new Linker();
-		StringBuilder sbQuery = new StringBuilder();
+		
 		PropManager propMgr = PropManager.getInstances();
 		Properties prop = propMgr.getProp("sftpConf" , "puma");
 		
@@ -36,39 +41,9 @@ public class TaskPumaSendOutbound extends TimerTask {
 		SFTPManager sftpMgr = null;
 		FileInputStream isFile = null;
 		FileOutputStream outTargetFile = null;
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		sbQuery.append(" SELECT OUTBOUND_NO ")
-		.append(" FROM LO020NM ")
-		.append(" WHERE CENTER_CD = 'A1' ") 
-		.append(" AND OUTBOUND_STATE = '50' ") 
-		.append(" AND ( SEND_STATE = '00' OR SEND_STATE IS NULL ) ")
-		.append(" AND ( FREE_VAL5 = '00' OR FREE_VAL5 IS NULL ) ")
-		.append(" AND BRAND_CD = '6101' ") 
-		.append(" AND OUTBOUND_DATE <= TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') ")
-		.append(" AND  DELIVERY_CD <> 'Z999' ");
-		logger.debug(sbQuery.toString());
-		
+	
 		try {
-			ConnectionManager connMgr = ConnectionManager.getInstances();
-			conn = connMgr.connect("wmsdb");
-			
-			pstmt = conn.prepareStatement(sbQuery.toString());
-			rs = pstmt.executeQuery();
-			
-			ArrayList<String> outboundList = new ArrayList<String>();
-			while(rs.next()) {
-				outboundList.add(rs.getString(1));
-			}
-			if(outboundList.size()<1) {
-				logger.info("send data is nothing !");
-			}
-			
-			for(int i=0; i<outboundList.size(); i++) {
-				ArrayList<String[]> sendData = linker.createSendData("sendOutbound", "puma", outboundList.get(i));
+				ArrayList<String[]> sendData = linker.createSendData("sendOutboundTmp", "puma", "0001");
 				StringBuilder sbXML = new StringBuilder();
 			
 				String curBrandNo="";
@@ -153,8 +128,7 @@ public class TaskPumaSendOutbound extends TimerTask {
 									xmlMgr.write(doc, prop.getProperty("send.upload.sourcePath")+"I_SHP_OB_"+sendData.get(k)[12]+".xml");
 									logger.info(sbXML.toString());
 									sbXML.delete(0, sbXML.length());
-									
-									linker.updateSucc(sendData.get(k)[12], "D10");
+									//linker.updateSucc(sendData.get(k)[12], "D10");
 								}
 								j=k+1;
 							} else {
@@ -165,8 +139,6 @@ public class TaskPumaSendOutbound extends TimerTask {
 						logger.error("else Error!");
 					}
 				}
-			}
-			
 			File sendPath = new File(prop.getProperty("send.upload.sourcePath"));
 			File[] f = sendPath.listFiles();
 			sftpMgr = new SFTPManager();
@@ -201,9 +173,6 @@ public class TaskPumaSendOutbound extends TimerTask {
 			}
 			sftpMgr.disconnection();
 			
-		} catch(SQLException e) {
-			loggerErr.error(e.getMessage());
-			loggerErr.error(e.toString());
 		} catch(Exception e) {
 			loggerErr.error(e.getMessage());
 			loggerErr.error(e.toString());
@@ -214,18 +183,6 @@ public class TaskPumaSendOutbound extends TimerTask {
 				}
 				if(isFile!=null) {
 					isFile.close();
-				}
-				
-				if(rs!=null) {
-					rs.close();
-				}
-				
-				if(pstmt!=null) {
-					pstmt.close();
-				}
-				
-				if(conn!=null) {
-					conn.close();
 				}
 			} catch (Exception e) {
 				loggerErr.error(e.getMessage());

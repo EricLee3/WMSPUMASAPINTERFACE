@@ -38,6 +38,7 @@ public class PumaLinker {
 			  .append(" WHERE BRAND_CD = '6101'") 
 			  .append(" AND ITEM_CD = '").append(itemCd).append("'");
 			
+			
 //			if("krsize".equals(type)) {
 //				sb.append("	UPDATE CMITEM ")
 //				  .append(" SET ITEM_SIZE = '").append(itemSize).append("'")
