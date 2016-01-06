@@ -41,11 +41,13 @@ public class PumaSendLinker {
 			} else if("sendInbound1".equals(args[0])) {
 				t1.schedule(new TaskPumaSendInboundTmp(), 1000);
 			}   else {				
-				String startDtOutbound = "2015-12-18 22:00:00";
+				String startDtOutbound = "2016-01-18 22:00:00";
 				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Date startDt = transFormat.parse(startDtOutbound);
 				
 				t1.schedule(new TaskPumaSendOutbound(), startDt, 86400000);
+				// PumaSendLinker_EXEC.jar  sendOutbound
+				//t1.schedule(new TaskPumaSendOutbound(), 1000);
 			}
 			logger.info("PumaSendLinker End!!");
 		} catch (Exception e) {
