@@ -20,7 +20,7 @@ public class PumaRecvLinker {
 			loggerErr.error(e.toString());
 		}
 	}
-	
+}
 //	private static Integer[] getLastFile() {
 //		PropManager propMgr = PropManager.getInstances();
 //		Properties fileProp = propMgr.getProp("fileInfo","puma");
@@ -39,4 +39,4 @@ public class PumaRecvLinker {
 //		}
 //		return lastNums;
 //	}
-}
+

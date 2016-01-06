@@ -118,6 +118,7 @@ public class TaskPumaRecv extends TimerTask {
 			}
 
 			sftpMgr.disconnection();
+			
 
 			File recvPath = new File(prop.getProperty("recv.targetPath"));
 			String[] recvFiles = recvPath.list();

@@ -1,6 +1,7 @@
 package com.gics.edi.common;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -129,6 +130,16 @@ public class SFTPManager {
 	}
 
 	public void disconnection() {
-	    channelSftp.quit();
+	    if(channelSftp != null){
+	    	channelSftp.disconnect();
+	    }
+	    
+	    if(channel != null){
+	    	channel.disconnect();
+	    }
+	    
+	    if(session != null){
+	    	session.disconnect();
+	    }
 	}
 }
