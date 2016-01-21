@@ -39,7 +39,7 @@ public class PumaSendLinker {
 				repTime = (1000*60*180); // 3시간
 				t1.schedule(new TaskPumaSendInbound(), 0, repTime);
 			} else if("sendInbound1".equals(args[0])) {
-				t1.schedule(new TaskPumaSendInboundTmp(), 1000);
+				//t1.schedule(new TaskPumaSendInboundTmp(), 1000);
 			}  else {				
 				String startDtOutbound = "2016-01-21 22:00:00";
 				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
