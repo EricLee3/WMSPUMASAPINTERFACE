@@ -46,7 +46,7 @@ public class TaskPumaSendOutbound extends TimerTask {
 		.append(" WHERE CENTER_CD = 'A1' ") 
 		.append(" AND OUTBOUND_STATE = '50' ") 
 		.append(" AND ( SEND_STATE = '00' OR SEND_STATE IS NULL ) ")
-		.append(" AND ( FREE_VAL5 = '00' OR FREE_VAL5 IS NULL ) ")
+//		.append(" AND ( FREE_VAL5 = '00' OR FREE_VAL5 IS NULL ) ")
 		.append(" AND BRAND_CD = '6101' ") 
 		.append(" AND OUTBOUND_DATE <= TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDD'),'YYYYMMDD') ")
 		.append(" AND  DELIVERY_CD <> 'Z999' ");
