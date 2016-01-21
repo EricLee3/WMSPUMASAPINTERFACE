@@ -672,7 +672,7 @@ public class Linker {
 				.append(" AND M1.OUTBOUND_NO = M2.OUTBOUND_NO ")
 				.append(" AND M1.CENTER_CD = 'A1' ")
 				.append(" AND M1.OUTBOUND_STATE = '50' ")
-				.append(" AND ( M1.FREE_VAL5 = '00' OR M1.FREE_VAL5 IS NULL ) ")
+//				.append(" AND ( M1.FREE_VAL5 = '00' OR M1.FREE_VAL5 IS NULL ) ")
 				.append(" AND ( M1.SEND_STATE = '00' OR M1.SEND_STATE IS NULL ) ")
 				.append(" AND M1.BRAND_CD = '6101' ")
 				.append(" AND M1.OUTBOUND_DATE <= TRUNC(SYSDATE) ")
