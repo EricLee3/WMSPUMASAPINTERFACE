@@ -17,7 +17,7 @@ public class PropManager {
 	public Properties getProp(String propName) {
 		try {
 			prop = new Properties();
-//			FileInputStream fis = new FileInputStream("D:\\eclipse\\projects\\WMSLinker\\props\\"+propName+".properties");
+//			FileInputStream fis = new FileInputStream("D:\\GITREPOSITORY\\WMSPUMASAPINTERFACE\\WMSPUMASAPINTERFACE\\props\\"+propName+".properties");
 			FileInputStream fis = new FileInputStream("/export/home/wms/WMSLinker/props/"+propName+".properties");
 			prop.load(fis);
 			
@@ -33,10 +33,10 @@ public class PropManager {
 			FileInputStream fis = null;
 			
 			if(type.length() > 0) {				
-//				fis = new FileInputStream("D:\\eclipse\\projects\\WMSLinker\\props\\"+type+"\\"+propName+".properties");
+//				fis = new FileInputStream("D:\\GITREPOSITORY\\WMSPUMASAPINTERFACE\\WMSPUMASAPINTERFACE\\props\\"+type+"\\"+propName+".properties");
 				fis = new FileInputStream("/export/home/wms/WMSLinker/props/"+type+"/"+propName+".properties");
 			} else {
-//				fis = new FileInputStream("D:\\eclipse\\projects\\WMSLinker\\props\\"+propName+".properties");
+//				fis = new FileInputStream("D:\\GITREPOSITORY\\WMSPUMASAPINTERFACE\\WMSPUMASAPINTERFACE\\props\\"+propName+".properties");
 				fis = new FileInputStream("/export/home/wms/WMSLinker/props/"+propName+".properties");
 			}
 			prop.load(fis);

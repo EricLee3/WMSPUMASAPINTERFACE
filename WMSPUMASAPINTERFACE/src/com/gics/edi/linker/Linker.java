@@ -348,6 +348,7 @@ public class Linker {
 	}
 	public String[] getChildren(Element element, String tagName, String conditions, String key, int currIdx, int nodeSize) {
 		
+	
 		String[] rtnValue = new String[2]; // 0: key , 1: value
 		ArrayList<String> condition = new ArrayList<String>();
 		ArrayList<String> value = new ArrayList<String>();
@@ -531,6 +532,7 @@ public class Linker {
 				}
 			}
 		}
+	
 		return rtnValue;
 	}
 	
@@ -592,6 +594,7 @@ public class Linker {
 		try {
 			conn = connMgr.connect("wmsdb");
 			if("sendInbound".equals(propName)) {
+								
 				sb.append(" SELECT 'EDI_DC40','100','700','2','MBGMCR02','MBGMCR'")
 				.append(" ,'MBGMCR','ISE-TRN','LS','KRISE','SAPT05','LS','T05CLNT100' ")
 				.append(" ,M1.CENTER_CD||M1.BRAND_CD||TO_CHAR(M1.INBOUND_DATE,'YYYYMMDD')||M1.INBOUND_NO||M2.LINE_NO ORDER_SEQ")
@@ -610,37 +613,49 @@ public class Linker {
 				.append(" AND M1.INBOUND_NO = '").append(outboundNo).append("' ")
 				.append(" AND M1.INBOUND_STATE='60' ") 
 				.append(" AND ( M1.SEND_STATE = '00' OR M1.SEND_STATE IS NULL ) ");
-			} else if("sendOutboundTmp".equals(propName)){
-				sb.append(" SELECT  'EDI_DC40', '700', '2'                                ")
-				.append("         ,'SHP_OBDLV_CONFIRM_DECENTRAL01'			")
-				.append("         ,'SHP_OBDLV_CONFIRM_DECENTRAL'			")
-				.append("         ,'SHP_DB'                                             ")  
-				.append("         ,'ISE_TRN','LS','KRISE','SAPP01','LS','P01CLNT100'    ")                                           
-				.append("         ,'A16101201509160038'                                 ")            
-				.append("         ,M2.BRAND_NO						")
-				.append("         ,M2.BRAND_NO						")
-				.append("         ,M2.BRAND_NO						")
-				.append("         ,'X'                                               	")
-				.append("         ,M2.BRAND_NO						")
-				.append("         ,'WSHDRWADTI'						")
-				.append("         ,TO_CHAR(M1.REG_DATETIME, 'YYYYMMDDHH24MISS')         ")                                      
-				.append("         ,M2.BRAND_NO						")
-				.append("         ,M2.BRAND_LINE_NO					")
-				.append("         ,M2.ORDER_QTY ENTRY_QTY						")
-				.append("         ,M2.ORDER_QTY ENTRY_QTY						")
-				.append("         ,'1'							")
-				.append("         ,'1'                                               	")
-				.append("         ,M2.BRAND_NO,M2.BRAND_LINE_NO,'X'                     ")                          
-				.append(" FROM LO010NM  M1, LO010ND M2                                  ")             
-				.append(" WHERE M1.CENTER_CD = M2.CENTER_CD                             ")                  
-				.append(" AND M1.BRAND_CD = M2.BRAND_CD                                 ")               
-				.append(" AND M1.ORDER_DATE = M2.ORDER_DATE                             ")                  
-				.append(" AND M1.ORDER_NO = M2.ORDER_NO                                 ")              
-				.append(" AND M1.CENTER_CD = 'A1'                                       ")        
-				.append(" AND M1.BRAND_CD = '6101'                                      ")         
-				.append(" AND M1.ORDER_DATE = TO_DATE('20150916', 'YYYYMMDD')           ")                                    
-				.append(" AND M1.ORDER_NO = '0025'                                      ")         
-				.append(" ORDER BY M2.BRAND_NO, M2.BRAND_LINE_NO			");
+				
+			}  else if("sendInbound1".equals(propName)) {
+				
+				/**
+				sb.append(" SELECT 'EDI_DC40','100','700','2','MBGMCR02','MBGMCR'")
+				.append(" ,'MBGMCR','ISE-TRN','LS','KRISE','SAPT05','LS','T05CLNT100' ")
+				.append(" ,M1.CENTER_CD||M1.BRAND_CD||TO_CHAR(M1.INBOUND_DATE,'YYYYMMDD')||M1.INBOUND_NO||M2.LINE_NO ORDER_SEQ")
+				.append(" ,M1.FREE_VAL3 BRAND_DATE ")
+				.append(" ,TO_CHAR(SYSDATE, 'YYYYMMDD') INBOUND_DATE, M1.BRAND_NO ")
+				.append(" ,M1.CENTER_CD||M1.BRAND_CD||TO_CHAR(M1.INBOUND_DATE,'YYYYMMDD')||M1.INBOUND_NO||M2.LINE_NO ORDER_SEQ2")
+				.append(" ,'01','101'")
+				.append(" ,M2.ENTRY_QTY,'B',M1.BRAND_NO,M2.BRAND_LINE_NO ") 
+				.append(" FROM LI020NM M1, LI020ND M2 ")
+				.append(" WHERE  M1.CENTER_CD = M2.CENTER_CD AND M1.BRAND_CD = M2.BRAND_CD ") 
+				.append(" AND M1.INBOUND_DATE = M2.INBOUND_DATE ") 
+				.append(" AND M1.INBOUND_NO = M2.INBOUND_NO ") 
+				.append(" AND M1.CENTER_CD = 'A1' ") 
+				.append(" AND M1.BRAND_CD = '6101' ") 
+				.append(" AND M1.INBOUND_DATE <= TRUNC(SYSDATE) ")
+				.append(" AND M1.INBOUND_NO = '").append(outboundNo).append("' ")
+				.append(" AND M1.INBOUND_STATE='60' ") 
+				.append(" AND ( M1.SEND_STATE = '00' OR M1.SEND_STATE IS NULL ) ");
+				**/
+				
+				
+				sb.append("SELECT														")
+				.append("	'EDI_DC40','100','700','2','MBGMCR02','MBGMCR' 									")
+				.append("	,'MBGMCR','ISE-TRN','LS','KRISE','SAPT05','LS','T05CLNT100'  							")
+				.append("	,M1.CENTER_CD||M1.BRAND_CD||TO_CHAR(M1.ORDER_DATE,'YYYYMMDD')||M1.ORDER_NO||M2.LINE_NO ORDER_SEQ 		")
+				.append("	,M1.FREE_VAL3 BRAND_DATE  											")
+				.append("	,'20151218' INBOUND_DATE, M1.BRAND_NO  										")
+				.append("	,M1.CENTER_CD||M1.BRAND_CD||TO_CHAR(M1.ORDER_DATE,'YYYYMMDD')||M1.ORDER_NO||M2.LINE_NO ORDER_SEQ2 		")
+				.append("	,'01','101' 													")
+				.append("	,M2.ORDER_QTY,'B',M1.BRAND_NO,M2.BRAND_LINE_NO   								")
+				.append("FROM LI010NM M1 ,  LI010ND M2												")
+				.append("WHERE  M1.CENTER_CD = M2.CENTER_CD AND M1.BRAND_CD = M2.BRAND_CD   							")
+				.append("AND M1.ORDER_DATE = M2.ORDER_DATE   											")
+				.append("AND M1.ORDER_NO = M2.ORDER_NO   											")
+				.append("AND M1.CENTER_CD = 'A1'   												")
+				.append("AND M1.BRAND_CD = '6101'   												")
+				.append("AND M1.ORDER_DATE IN (TO_DATE('20151218', 'YYYYMMDD'),TO_DATE('20151219', 'YYYYMMDD'))  				")
+				.append("AND M1.BRAND_NO <> '999999999'												");
+				
 			} else {
 				sb.append(" SELECT 'EDI_DC40', '700', '2', ")
 				.append(" 'SHP_OBDLV_CONFIRM_DECENTRAL01','SHP_OBDLV_CONFIRM_DECENTRAL','SHP_DB' ")
@@ -657,7 +672,7 @@ public class Linker {
 				.append(" AND M1.OUTBOUND_NO = M2.OUTBOUND_NO ")
 				.append(" AND M1.CENTER_CD = 'A1' ")
 				.append(" AND M1.OUTBOUND_STATE = '50' ")
-				.append(" AND ( M1.FREE_VAL5 = '00' OR M1.FREE_VAL5 IS NULL ) ")
+//				.append(" AND ( M1.FREE_VAL5 = '00' OR M1.FREE_VAL5 IS NULL ) ")
 				.append(" AND ( M1.SEND_STATE = '00' OR M1.SEND_STATE IS NULL ) ")
 				.append(" AND M1.BRAND_CD = '6101' ")
 				.append(" AND M1.OUTBOUND_DATE <= TRUNC(SYSDATE) ")
